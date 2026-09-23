@@ -76,4 +76,18 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# ===== ML-Agents =====
+# Python-окружения (если используешь mlagents-envs локально)
+ml-agents-envs/
+ml-agents/
+__pycache__/
+*.pyc
 
+# TensorBoard
+/[Tt]ensor[Bb]oard/
+
+# ===== OS / IDE =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
