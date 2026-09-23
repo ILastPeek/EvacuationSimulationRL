@@ -1,77 +1,161 @@
-# Crowd Evacuation Simulation in Unity using ML-Agents and Reinforcement Learning
+<h1 align="center">🏃 EvacuationSimulationRL</h1>
 
-[![Unity Version](https://img.shields.io/badge/Unity-2023.2.0f1-blue.svg)](https://unity.com/)
-[![Python Version](https://img.shields.io/badge/Python-3.10.12-green.svg)](https://python.org)
-[![ML-Agents](https://img.shields.io/badge/ML--Agents-1.1.0-lightgrey.svg)](https://unity-technologies.github.io/ml-agents/) 
+<p align="center">
+  <b>Агент-ориентированная симуляция эвакуации людей из зданий<br>с обучением с подкреплением (Unity + ML-Agents)</b>
+</p>
 
-**An agent-based model for human evacuation from buildings using Reinforcement Learning (RL).** Agents make decisions based solely on local observations through RayPerceptionSensor3D components, simulating limited human vision in dynamic environments.
+<p align="center">
+  <img src="https://img.shields.io/badge/Unity-2023.2.0f1-black?logo=unity" alt="Unity">
+  <img src="https://img.shields.io/badge/ML--Agents-1.1.0-blue" alt="ML-Agents">
+  <img src="https://img.shields.io/badge/PyTorch-2.2.1-ee4c2c?logo=pytorch" alt="PyTorch">
+  <img src="https://img.shields.io/badge/Python-3.10-3776AB?logo=python" alt="Python">
+  <img src="https://img.shields.io/badge/C%23-.NET-512BD4?logo=dotnet" alt="C#">
+</p>
 
-**Key Innovation:** Agents have no prior knowledge of building layouts and learn to find exits through an adaptive reward system, handling random obstacles and environmental changes in real-time.
+---
 
-![Simulation Preview](https://github.com/LastPeek1/agent-based-evacuation-modeling/blob/9f562f1eefdb7568e719a7fb405df590e355858e/40%20-%20frame%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F.jpg)
+## 📖 О проекте
 
-## 🧠 Core Concepts
+Агенты **не имеют глобальной карты здания** и обучаются находить выходы
+только на основе локальных сенсорных данных. Это имитирует ограниченное
+восприятие человека в условиях пожара или чрезвычайной ситуации.
 
-### Local Perception System
-Agents use dual-layer RayPerceptionSensor3D (upper/lower) scanning 180° arc parallel to floor:
-- **Detects:** Walls, Agents, Exits, Doors
-- **Key Feature:** Low barriers impede movement but **don't block vision** (rays pass over them)
+> 🎯 **Цель проекта:** исследовать, как обучение с подкреплением справляется
+> с задачей коллективной эвакуации в условиях частичной наблюдаемости.
 
-### Adaptive Reward System
-| Reward Type       | Condition                     |
-|-------------------|-------------------------------|
-| ✅ Exit Reward    | Reaching exit                 |
-| ❌ Wall Collision | Colliding with wall           | 
-| ❌ Agent Collision| Colliding with other agent    |
-| ❌ Time Penalty   | Exceeding evacuation time     |
+---
 
-### Dynamic Environment
-- Random agent placement at episode start
-- Dynamic obstacles (door opening/closing)
-- Realistic agent-agent interactions
-- No global map knowledge - decisions based solely on sensor data
+## 🎬 Демонстрация
 
-![Ray Perception Visualization](https://github.com/LastPeek1/agent-based-evacuation-modeling/blob/9f562f1eefdb7568e719a7fb405df590e355858e/image.png)
+### Сцена симуляции
 
-## ⚙️ Technology Stack
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ILastPeek/EvacuationSimulationRL/main/40%20-%20frame.jpg" alt="Сцена симуляции" width="80%">
+</p>
 
-| Component             | Purpose                                                                 |
-|-----------------------|-------------------------------------------------------------------------|
-| **Unity 2023.2.0f1**  | 3D environment, physics, rendering                                     |
-| **ML-Agents 1.1.0**   | Reinforcement learning framework                                        |
-| **PyTorch 2.2.1**     | Neural network backend                                                  |
-| **C#**                | Agent logic, environment interaction                                   |
-| **Python 3.10.12**    | Training configuration & execution                                     |
-| **TensorBoard**       | Training metrics visualization                                         |
+### Визуализация лучей восприятия
 
-## 🧩 Architecture
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ILastPeek/EvacuationSimulationRL/main/image.png" alt="Лучи RayPerceptionSensor3D" width="80%">
+</p>
 
-### Core Scripts
-| Script               | Responsibilities                                                                 |
-|----------------------|----------------------------------------------------------------------------------|
-| **`Agent_Logic.cs`** | - Action processing (movement, rotations)<br>- Observation collection<br>- Collision handling<br>- Heuristic control |
-| **`LevelManager.cs`**| - Agent registration<br>- Episode reset logic<br>- Group management<br>- Reward calculation |
-| **`AgentSettings.cs`** | Centralized parameters (ScriptableObject):<br>- Movement speeds<br>- Penalty values<br>- Ray configurations |
-| **`Door.cs`**        | Door state management and interaction handling                                  |
+<p align="center">
+  <i>Агенты «видят» мир через 180° дугу лучей: стены, других агентов, двери и выходы.</i>
+</p>
 
-## 🚀 Getting Started
+---
 
-### Prerequisites
-**Essential reading before starting:**
-- [📚 ML-Agents Official Documentation](https://github.com/Unity-Technologies/ml-agents/tree/develop)
-- [📚 Installation Guide](https://github.com/Unity-Technologies/ml-agents/blob/develop/docs/Installation.md)
+## 🛠 Стек
 
-**Verified Software Versions:**
-| Component       | Version     | Notes                                  |
-|-----------------|-------------|----------------------------------------|
-| Unity           | 2023.2.0f1  | Requires exact version                 |
-| ML-Agents       | 1.1.0       | Python package                         |
-| Python          | 3.10.12     | Must be 3.10.1-3.10.12                 |
-| PyTorch (CUDA)  | 2.2.1       | GPU acceleration                       |
+| Технология | Версия | Роль |
+|---|---|---|
+| **Unity** | 2023.2.0f1 | Среда симуляции |
+| **ML-Agents** | 1.1.0 | Фреймворк RL |
+| **PyTorch** | 2.2.1 | Обучение нейросети |
+| **Python** | 3.10 | Backend обучения |
+| **C#** | — | Логика агентов и среды |
+| **TensorBoard** | — | Визуализация метрик |
 
-### Installation Guide
+---
 
-Clone repository
+## 🧠 Как это работает
+
+### 👁 Локальное восприятие
+
+Каждый агент «видит» мир только через `RayPerceptionSensor3D` —
+**180° дуга с двухуровневым сканированием**. Лучи детектируют стены,
+других агентов, выходы и двери. Низкие барьеры не блокируют обзор:
+лучи проходят поверх них.
+
+> Глобальная карта здания агенту **недоступна** — он учится искать выход
+> по локальным сигналам, как человек в незнакомом помещении.
+
+### 🎁 Система наград
+
+| Событие | Награда |
+|---|---|
+| ✅ Достижение выхода | **+** |
+| ❌ Столкновение со стеной | **−** |
+| ❌ Столкновение с другим агентом | **−** |
+| ⏱ Каждая секунда промедления | **−** |
+
+Благодаря такой схеме агент учится не только находить выход,
+но и делать это **быстро, не создавая давку**.
+
+### 🌍 Динамическое окружение
+
+- 🎲 Случайное размещение агентов в начале каждого эпизода
+- 🚪 Открывающиеся и закрывающиеся двери
+- 👥 Реалистичное взаимодействие агентов между собой
+
+---
+
+## 🏗 Архитектура
+
+| Файл | Отвечает за |
+|---|---|
+| `Agent_Logic.cs` | Действия агента, сбор наблюдений, обработка коллизий |
+| `LevelManager.cs` | Регистрация агентов, сброс эпизодов, расчёт наград |
+| `AgentSettings.cs` | `ScriptableObject` с параметрами симуляции |
+| `Door.cs` | Управление состоянием дверей (открыто / закрыто) |
+
+---
+
+## 📈 Обучение
+
+Модель обучена через ML-Agents. Метрики (рост награды, длина эпизода,
+доля успешных эвакуаций) визуализированы в TensorBoard.
+
+<!-- Если есть график — раскомментируй и подставь путь
+<p align="center">
+  <img src="docs/training/training_progress.png" alt="Прогресс обучения" width="70%">
+</p>
+-->
+
+---
+
+## 🚀 Запуск
+
+### Требования
+
+- Unity **2023.2.0f1** (или совместимая)
+- Python **3.10**
+- ML-Agents Toolkit
+
+### Установка
+
+### Установка
+
+```bash
+git clone https://github.com/ILastPeek/EvacuationSimulationRL.git
+cd EvacuationSimulationRL
 ```
-git clone https://github.com/LastPeek1/agent-based-evacuation-modeling.git
-cd agent-based-evacuation-modeling
+
+1. Открой проект через **Unity Hub**.
+2. Установи Python-зависимости: `pip install mlagents==1.1.0`
+3. Запусти обучение: `mlagents-learn config/trainer_config.yaml --run-id=run1`
+4. Открой сцену `Assets/Scenes/Main.unity` в Unity и нажми **Play**.
+
+---
+
+## 🎓 Контекст
+
+Проект выполнен в рамках дипломной работы по теме **«Применение обучения с подкреплением в агент-ориентированном моделировании эвакуации людей из зданий»**.
+
+Диплом защищён с **отличием**.
+
+---
+
+## 👤 Автор
+
+**Емельянов Максим**
+
+[![GitHub](https://img.shields.io/badge/GitHub-ILastPeek-181717?logo=github)](https://github.com/ILastPeek)
+[![Telegram](https://img.shields.io/badge/Telegram-@LastPeek-26A5E4?logo=telegram)](https://t.me/LastPeek)
+[![Email](https://img.shields.io/badge/Email-thelastpeek@gmail.com-EA4335?logo=gmail)](mailto:thelastpeek@gmail.com)
+
+---
+
+<p align="center">
+  <i>Если проект оказался полезен — поставь ⭐ репозиторию!</i>
+</p>
